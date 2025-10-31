@@ -1,0 +1,7 @@
+{
+  "name": "tacita_guia",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
