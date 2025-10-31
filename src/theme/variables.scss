@@ -1,2 +1,19 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+:root {
+    --ion-color-primary: #A3D8F4;
+    --ion-color-secondary: #F5E6CC;
+    --ion-color-background: #FFFFFF;
+    --ion-color-text: #2C2C2C;
+
+    --ion-font-family: 'Parkinsans', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ion-color-primary: #5DB7DE;
+        --ion-color-secondary: #2B2B2B;
+        --ion-color-background: #121212;
+        --ion-color-text: #FFFFFF;
+
+        --ion-font-family: 'Parkinsans', sans-serif;
+    }
+}

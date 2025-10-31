@@ -1,0 +1,34 @@
+<ion-card *ngIf="monumento" color="light">
+  <ion-img [src]="monumento.imagen" alt="{{ monumento.nombre }}" loading="eager"></ion-img>
+
+  <ion-card-header>
+    <ion-card-title color="primary">
+      {{ monumento.nombre }}
+    </ion-card-title>
+    <ion-card-subtitle color="medium">
+      {{ monumento.ubicacion }}
+    </ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-text color="dark">
+      <p>{{ monumento.descripcion }}</p>
+      <p>
+        <strong>Fecha de construcción:</strong>
+        {{ monumento.fecha_construccion | date:'longDate':'':'es' }}
+      </p>
+    </ion-text>
+
+    <ion-button color="primary" expand="block" fill="outline" shape="round" size="small">
+      Ver detalles
+    </ion-button>
+  </ion-card-content>
+</ion-card>
+
+<ion-card *ngIf="!monumento" color="light">
+  <ion-card-content>
+    <ion-text color="warning">
+      ⚠️ No hay datos del monumento disponibles.
+    </ion-text>
+  </ion-card-content>
+</ion-card>
