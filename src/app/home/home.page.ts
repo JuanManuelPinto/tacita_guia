@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonRow, IonGrid, IonCol } from '@ionic/angular/standalone';
 import { Monumento } from '../interfaces/monumento';
 import { MonumentItemComponent } from "../components/monument-item/monument-item.component";
 import { HeaderComponent } from '../components/header/header.component';
+
+import { FormsModule } from '@angular/forms';
+import { IonRow, IonGrid, IonCol, IonList, IonItem, IonInput, IonButton, IonContent, IonDatetime, IonLabel, IonDatetimeButton, IonModal, IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCol, IonRow, IonContent, MonumentItemComponent, CommonModule, IonGrid, HeaderComponent],
+  imports: [IonIcon, IonFabButton, IonFab,  IonModal, IonDatetimeButton, IonLabel, IonContent, IonCol, IonRow, MonumentItemComponent, CommonModule, IonGrid,
+    HeaderComponent, FormsModule, IonList, IonItem, IonInput, IonButton, IonContent, IonDatetime],
 })
 export class HomePage {
   constructor() { }
@@ -97,4 +101,36 @@ export class HomePage {
     },
 
   ];
+
+  public nuevo_monumento: Monumento = {
+    id: 0,
+    nombre: "",
+    descripcion: "",
+    imagen: "",
+    ubicacion: "",
+    fecha_construccion: new Date(),
+  };
+
+  agregar_monumento() {
+    if (this.nuevo_monumento.nombre.trim() === "") {
+      return;
+    }
+
+    this.nuevo_monumento.id = this.monumentos.length + 1;
+    
+    this.monumentos.unshift(this.nuevo_monumento);
+    
+    this.nuevo_monumento = {
+      id: 0,
+      nombre: "",
+      descripcion: "",
+      imagen: "",
+      ubicacion: "",
+      fecha_construccion: new Date(),
+    };
+  }
+
+  mostrar_informacion_web() {
+    window.open("https://www.cadizturismo.com/", "_blank");
+  }
 }
