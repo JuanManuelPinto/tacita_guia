@@ -53,9 +53,55 @@
   </ion-grid>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="mostrar_informacion_web()">
-      <ion-icon name="add"></ion-icon>
+    <ion-fab-button (click)="abrirModal()">
+      <ion-icon name="information-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+<!-- SKELETON DE TARJETAS DE MONUMENTOS -->
+<div *ngIf="cargando">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-start">
+
+      <!-- Repetimos 6 tarjetas skeleton -->
+      <ion-col size="12" size-sm="6" size-md="5" size-lg="4" size-xl="3"
+               class="monument-col" *ngFor="let skeleton of [1,2,3,4,5,6]">
+
+        <ion-card>
+          
+          <!-- Imagen skeleton -->
+          <div class="imagen-skeleton">
+            <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+          </div>
+
+          <ion-card-header>
+            <!-- Título skeleton -->
+            <ion-card-title>
+              <ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <!-- Descripción skeleton -->
+            <p>
+              <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+            </p>
+
+            <!-- Botón skeleton -->
+            <div style="margin-top: 10px;">
+              <ion-skeleton-text animated style="width: 40%; height: 35px;"></ion-skeleton-text>
+            </div>
+          </ion-card-content>
+
+        </ion-card>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</div>
+
 
 </ion-content>
