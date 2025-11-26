@@ -8,30 +8,25 @@
         [(ngModel)]="nuevo_monumento.nombre">
       </ion-input>
     </ion-item>
-
     <ion-item>
       <ion-input label="Descripcion" labelPlacement="floating" placeholder="Descripcion del monumento"
         [(ngModel)]="nuevo_monumento.descripcion">
       </ion-input>
     </ion-item>
-
     <ion-item>
       <ion-input label="Imagen" labelPlacement="floating" placeholder="Imagen del monumento"
         [(ngModel)]="nuevo_monumento.imagen">
       </ion-input>
     </ion-item>
-
     <ion-item>
       <ion-input label="Ubicacion" labelPlacement="floating" placeholder="Ubicacion del monumento"
         [(ngModel)]="nuevo_monumento.ubicacion">
       </ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label>Fecha de Construcción</ion-label>
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
     </ion-item>
-
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
         <ion-datetime id="datetime" presentation="date"></ion-datetime>
@@ -45,10 +40,37 @@
 
   <ion-grid>
     <ion-row class="ion-justify-content-center ion-align-items-start">
-      <ion-col size="12" size-sm="6" size-md="5" size-lg="4" size-xl="3" class="monument-col"
-        *ngFor="let a of monumentos">
-        <app-monument-item [monumento]="a"></app-monument-item>
-      </ion-col>
+
+      <ng-container *ngIf="cargando">
+        <ion-col size="6" size-sm="6" size-md="5" size-lg="4" size-xl="3" 
+                 class="monument-col" *ngFor="let skeleton of skeletonCards">
+          <ion-card class="skeleton-card">
+            <ion-skeleton-text animated style="width: 100%; height: 200px; margin: 0;"></ion-skeleton-text>
+            <ion-card-header>
+              <ion-skeleton-text animated style="width: 50%; height: 16px; margin-bottom: 5px;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 80%; height: 24px;"></ion-skeleton-text>
+            </ion-card-header>
+            <ion-card-content>
+              <p>
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
+              </p>
+              <div class="ion-margin-top">
+                <ion-skeleton-text animated style="width: 30%; height: 30px; border-radius: 4px;"></ion-skeleton-text>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ng-container>
+
+      <ng-container *ngIf="!cargando">
+        <ion-col size="6" size-sm="6" size-md="5" size-lg="4" size-xl="3" 
+                 class="monument-col" *ngFor="let a of monumentos">
+          <app-monument-item [monumento]="a"></app-monument-item>
+        </ion-col>
+      </ng-container>
+
     </ion-row>
   </ion-grid>
 
@@ -57,51 +79,5 @@
       <ion-icon name="information-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-<!-- SKELETON DE TARJETAS DE MONUMENTOS -->
-<div *ngIf="cargando">
-  <ion-grid>
-    <ion-row class="ion-justify-content-center ion-align-items-start">
-
-      <!-- Repetimos 6 tarjetas skeleton -->
-      <ion-col size="12" size-sm="6" size-md="5" size-lg="4" size-xl="3"
-               class="monument-col" *ngFor="let skeleton of [1,2,3,4,5,6]">
-
-        <ion-card>
-          
-          <!-- Imagen skeleton -->
-          <div class="imagen-skeleton">
-            <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
-          </div>
-
-          <ion-card-header>
-            <!-- Título skeleton -->
-            <ion-card-title>
-              <ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
-            </ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            <!-- Descripción skeleton -->
-            <p>
-              <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
-            </p>
-
-            <!-- Botón skeleton -->
-            <div style="margin-top: 10px;">
-              <ion-skeleton-text animated style="width: 40%; height: 35px;"></ion-skeleton-text>
-            </div>
-          </ion-card-content>
-
-        </ion-card>
-
-      </ion-col>
-
-    </ion-row>
-  </ion-grid>
-</div>
-
 
 </ion-content>

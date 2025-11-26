@@ -4,7 +4,7 @@ import { Monumento } from '../interfaces/monumento';
 import { MonumentItemComponent } from "../components/monument-item/monument-item.component";
 import { HeaderComponent } from '../components/header/header.component';
 
-import { ToastController, AlertController, ModalController, IonCheckbox, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/angular/standalone';
+import { ToastController, ModalController, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/angular/standalone';
 
 import { FormsModule } from '@angular/forms';
 import { IonSkeletonText, IonRow, IonGrid, IonCol, IonList, IonItem, IonInput, IonButton, IonContent, IonDatetime, IonLabel, IonDatetimeButton, IonModal, IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
@@ -18,7 +18,7 @@ import { informationCircleOutline } from 'ionicons/icons';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCardContent, IonCardTitle, IonCardHeader, IonCard, IonCheckbox, IonIcon, IonFabButton, IonFab, IonModal, IonDatetimeButton, IonLabel, IonContent, IonCol, IonRow, MonumentItemComponent, CommonModule, IonGrid,
+  imports: [IonCardContent, IonCardTitle, IonCardHeader, IonCard, IonIcon, IonFabButton, IonFab, IonModal, IonDatetimeButton, IonLabel, IonContent, IonCol, IonRow, MonumentItemComponent, CommonModule, IonGrid,
     HeaderComponent, FormsModule, IonList, IonItem, IonInput, IonButton, IonContent, IonDatetime, IonSkeletonText],
 })
 export class HomePage {
@@ -26,6 +26,8 @@ export class HomePage {
   public cargando: boolean = true;
   public monumentos: Monumento[] = [];
   
+  public skeletonCards: number[] = [1,2,3,4,5,6,7,8];
+
   constructor(
     private toastController: ToastController,
     private modalController: ModalController,
