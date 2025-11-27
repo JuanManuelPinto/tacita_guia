@@ -1,31 +1,33 @@
-<ion-card *ngIf="monumento" color="light">
+<ion-card *ngIf="monumento" #card class="modern-card">
   <ion-img [src]="monumento.imagen" alt="{{ monumento.nombre }}" loading="eager"></ion-img>
 
   <ion-card-header>
-    <ion-card-title color="primary">
-      {{ monumento.nombre }}
-    </ion-card-title>
-    <ion-card-subtitle color="secondary">
+    <ion-card-subtitle color="primary" class="location-badge">
       {{ monumento.ubicacion }}
     </ion-card-subtitle>
+    <ion-card-title class="card-title">
+      {{ monumento.nombre }}
+    </ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
     <ion-text color="dark">
-      <p>{{ monumento.descripcion }}</p>
-      <p>
-        <strong>Fecha de construcción:</strong>
-        {{ monumento.fecha_construccion | date:'longDate':'':'es' }}
-      </p>
+      <p class="desc-text">{{ monumento.descripcion }}</p>
     </ion-text>
 
-    <ion-button color="primary" expand="block" fill="solid" shape="round" size="small">
+    <div class="date-row">
+      <ion-text color="medium">
+        <small><strong>Construcción:</strong> {{ monumento.fecha_construccion | date:'longDate':'':'es' }}</small>
+      </ion-text>
+    </div>
+
+    <ion-button class="action-btn" color="primary" expand="block" fill="outline" shape="round" size="small">
       Ver detalles
     </ion-button>
   </ion-card-content>
 </ion-card>
 
-<ion-card *ngIf="!monumento" color="light">
+<ion-card *ngIf="!monumento" color="light" class="modern-card empty-card">
   <ion-card-content>
     <ion-text color="warning">
       ⚠️ No hay datos del monumento disponibles.

@@ -1,18 +1,74 @@
+.contenido-modal {
+     background: var(--ion-background-color); 
+}
+
+.contenedor-centro {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
+     padding-top: 10px;
+}
+
+.icono-cabecera {
+     background: var(--ion-color-light);
+     width: 64px;
+     height: 64px;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 16px;
+
+     ion-icon {
+          font-size: 32px;
+     }
+}
+
 .titulo {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-bottom: 15px;
-  font-weight: bold;
+     margin: 0 0 10px 0;
+     font-weight: 800;
+     font-size: 1.5rem;
+     color: var(--ion-text-color);
 }
 
-.texto {
-  margin-bottom: 12px;
-  font-size: 1rem;
-  line-height: 1.5;
-  text-align: justify;
-  color: #444;
+.texto-descripcion {
+     font-size: 0.95rem;
+     color: var(--ion-color-medium);
+     line-height: 1.5;
+     margin-bottom: 24px;
+     max-width: 90%;
 }
 
-.boton {
-  margin-top: 25px;
+.lista-ventajas {
+     display: flex;
+     gap: 20px;
+     margin-bottom: 30px;
+  
+     .ventaja {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+     
+          ion-icon {
+               font-size: 24px;
+               padding: 10px;
+               background: var(--ion-color-light);
+               border-radius: 12px;
+          }
+
+          span {
+               font-size: 0.8rem;
+               font-weight: 600;
+               color: var(--ion-text-color);
+          }
+     }
+}
+
+.boton-entendido {
+     width: 100%;
+     font-weight: 700;
+     margin-top: 10px;
+     border-radius: 12px;
 }

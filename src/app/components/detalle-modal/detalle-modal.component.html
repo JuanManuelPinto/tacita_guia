@@ -1,33 +1,39 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Sobre la Aplicación</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Tacita Guía</ion-title>
+    
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <div class="contenedor-centro">
+    
+    <div class="icono-cabecera">
+      <ion-icon name="map" color="primary"></ion-icon>
+    </div>
 
-  <h2 class="titulo">Bienvenido a la Guía Turística de Cádiz</h2>
+    <p class="texto-descripcion">
+      Descubre la esencia de Cádiz. Explora monumentos históricos, conoce su historia y visualiza sus detalles.
+    </p>
 
-  <p class="texto">
-    Esta aplicación ha sido diseñada para ofrecerte una forma sencilla, rápida y visual
-    de descubrir los monumentos más emblemáticos de la ciudad de Cádiz.
-  </p>
+    <div class="lista-ventajas">
+      <div class="ventaja">
+        <ion-icon name="images-outline" color="secondary"></ion-icon>
+        <span>Galería visual</span>
+      </div>
+      <div class="ventaja">
+        <ion-icon name="add-circle-outline" color="tertiary"></ion-icon>
+        <span>Añade tus sitios</span>
+      </div>
+    </div>
 
-  <p class="texto">
-    Podrás explorar lugares históricos, conocer cuándo fueron construidos, su historia,
-    su ubicación y ver imágenes destacadas. Todo en una interfaz intuitiva y pensada
-    para mejorar tu experiencia como visitante.
-  </p>
-
-  <p class="texto">
-    Además, puedes añadir tus propios monumentos o rincones favoritos para personalizar
-    tu recorrido turístico.
-  </p>
-
-  <div class="boton">
-    <ion-button expand="block" color="medium" (click)="cerrarModal()">
-      OK
+    <ion-button expand="block" class="boton-entendido" (click)="cerrarModal()">
+      ¡Entendido!
     </ion-button>
   </div>
-
 </ion-content>
