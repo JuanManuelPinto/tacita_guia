@@ -1,15 +1,9 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonText, IonButton, GestureController } from '@ionic/angular/standalone';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonText, IonButton, GestureController, ToastController } from '@ionic/angular/standalone';
 import { Monumento } from '../../interfaces/monumento';
 
-import { addIcons } from 'ionicons';
-import { 
-  locationOutline, 
-  calendarOutline, 
-  arrowForwardOutline, 
-  alertCircleOutline 
-} from 'ionicons/icons';
+import { MonumentService } from '../../services/monument.service';
 
 @Component({
      selector: 'app-monument-item',
@@ -25,16 +19,28 @@ import {
           IonCardContent,
           IonImg,
           IonText,
-          IonButton
+          IonButton,
      ],
 })
 
 export class MonumentItemComponent implements AfterViewInit {
      @Input() monumento!: Monumento;
+     @Output() eliminado = new EventEmitter<number>();
 
      @ViewChild('card', { read: ElementRef }) card!: ElementRef;
 
-     constructor (private gestureCtrl: GestureController) {}
+     constructor (private monumentService: MonumentService, private gestureCtrl: GestureController, private toastController: ToastController) {}
+
+     async eliminado_correcto() {
+          const toast = await this.toastController.create({
+               message: 'Monumento Eliminado Correctamente',
+               duration: 2000,
+               position: 'bottom',
+               color: 'success',
+               buttons: ['OK'],
+          });
+          await toast.present();
+     }
 
      ngAfterViewInit() {
           const gesture = this.gestureCtrl.create({
@@ -52,8 +58,10 @@ export class MonumentItemComponent implements AfterViewInit {
                     const swipeThreshold = this.card.nativeElement.offsetWidth * 0.4;
 
                     if (Math.abs(ev.deltaX) > swipeThreshold) {
+                         this.card.nativeElement.style.transition = '0.3s ease-out';
                          this.card.nativeElement.style.transform = `translateX(-100%)`;
-                         console.log(`¡Eliminar monumento ${this.monumento.id}!`);
+
+                         this.eliminar_monumento(this.monumento.id);
                     } else {
                          this.card.nativeElement.style.transition = '.2s ease-out';
                          this.card.nativeElement.style.transform = `translateX(0px)`;
@@ -62,5 +70,11 @@ export class MonumentItemComponent implements AfterViewInit {
           });
 
           gesture.enable(true);
+     }
+
+     async eliminar_monumento(id: number) {
+          await this.monumentService.eliminar_monumento(id);
+          this.eliminado.emit(id);
+          this.eliminado_correcto();
      }
 }

@@ -50,7 +50,7 @@
 
     <ion-button
       expand="block"
-      (click)="agregar_monumento()"
+      (click)="agregar_monumento(nuevo_monumento)"
       class="ion-margin-top ion-margin-bottom"
     >
       Añadir Monumento
@@ -120,7 +120,7 @@
           class="monument-col"
           *ngFor="let a of monumentos"
         >
-          <app-monument-item [monumento]="a"></app-monument-item>
+          <app-monument-item [monumento]="a" (eliminado)="cargar_monumentos()"></app-monument-item>
         </ion-col>
       </ng-container>
     </ion-row>
