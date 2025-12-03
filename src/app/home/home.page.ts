@@ -34,6 +34,7 @@ import {
      IonIcon,
      AnimationController,
      Animation,
+     IonAlert,
 } from '@ionic/angular/standalone';
 
 import { DetalleModalComponent } from '../components/detalle-modal/detalle-modal.component';
@@ -68,6 +69,7 @@ import { informationCircleOutline } from 'ionicons/icons';
           IonButton,
           IonDatetime,
           IonSkeletonText,
+          IonAlert,
      ],
 })
 export class HomePage implements AfterViewInit {
@@ -80,6 +82,8 @@ export class HomePage implements AfterViewInit {
 
      public skeletonCards: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
+     
+     
      public nuevo_monumento: Monumento = {
           id: 0,
           nombre: '',
@@ -89,6 +93,22 @@ export class HomePage implements AfterViewInit {
           fecha_construccion: new Date(),
      };
 
+     public isAlertOpen: boolean = false;
+     
+     alertButtons = [
+          {
+               text: 'Cancelar',
+               role: 'cancel'
+          },
+          {
+               text: 'Confirmar',
+               role: 'confirm',
+               handler: () => {
+                    this.agregar_monumento(this.nuevo_monumento);
+               }
+          }
+     ];
+     
      constructor(
           private modalController: ModalController,
           private animationCtrl: AnimationController,
@@ -174,6 +194,15 @@ export class HomePage implements AfterViewInit {
 
      cargar_monumentos() {
           this.monumentos = this.monumentService.get_monumentos();
+     }
+
+     onAddClick() {
+          const { nombre, descripcion, imagen, ubicacion } = this.nuevo_monumento;
+          if (!nombre?.trim() || !descripcion?.trim() || !imagen?.trim() || !ubicacion?.trim()) {
+               this.error_insertar();
+               return;
+          }
+          this.isAlertOpen = true;
      }
 
      async agregar_monumento(nuevo_monumento: Monumento) {

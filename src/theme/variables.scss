@@ -61,6 +61,8 @@
   --ion-color-dark-contrast-rgb: 255, 255, 255;
   --ion-color-dark-shade: #1a2434;
   --ion-color-dark-tint: #353e4f;
+  --ion-font-family: 'Saira',  serif;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -119,5 +121,6 @@
 
     --ion-item-background: #1e293b;
     --ion-card-background: #1e293b;
+    --ion-font-family: 'Saira', serif;
   }
 }
