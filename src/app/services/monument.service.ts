@@ -142,4 +142,8 @@ export class MonumentService {
     async eliminar_monumento(id: number) {
         this.monumentos = this.monumentos.filter((monumento) => monumento.id !== id);
     }
+
+    get_monumento_id(id: number): Monumento | undefined {
+        return this.monumentos.find((monumento) => monumento.id === id);
+    }
 }

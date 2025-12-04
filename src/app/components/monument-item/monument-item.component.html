@@ -1,5 +1,9 @@
 <ion-card *ngIf="monumento" #card class="modern-card">
-  <ion-img [src]="monumento.imagen" alt="{{ monumento.nombre }}" loading="eager"></ion-img>
+  <ion-img
+    [src]="monumento.imagen"
+    alt="{{ monumento.nombre }}"
+    loading="eager"
+  ></ion-img>
 
   <ion-card-header>
     <ion-card-subtitle color="primary" class="location-badge">
@@ -17,11 +21,25 @@
 
     <div class="date-row">
       <ion-text color="medium">
-        <small><strong>Construcción:</strong> {{ monumento.fecha_construccion | date:'longDate':'':'es' }}</small>
+        <small
+          ><strong>Construcción:</strong>
+          {{
+            monumento.fecha_construccion | date : "longDate" : "" : "es"
+          }}</small
+        >
       </ion-text>
     </div>
 
-    <ion-button class="action-btn" color="primary" expand="block" fill="outline" shape="round" size="small">
+    <ion-button
+      class="action-btn"
+      color="primary"
+      expand="block"
+      fill="outline"
+      shape="round"
+      size="small"
+      routerLink="/monument-detail/{{ monumento.id }}"
+      routerDirection="forward"
+    >
       Ver detalles
     </ion-button>
   </ion-card-content>

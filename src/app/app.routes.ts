@@ -10,4 +10,8 @@ export const routes: Routes = [
         redirectTo: 'home',
         pathMatch: 'full',
     },
+    {
+        path: 'monument-detail/:id',
+        loadComponent: () => import('./pages/monument-detail/monument-detail.page').then((m) => m.MonumentDetailPage),
+    },
 ];

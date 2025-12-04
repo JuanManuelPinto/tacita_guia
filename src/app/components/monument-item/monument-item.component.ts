@@ -5,6 +5,9 @@ import { Monumento } from '../../interfaces/monumento';
 
 import { MonumentService } from '../../services/monument.service';
 
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+
 @Component({
      selector: 'app-monument-item',
      templateUrl: './monument-item.component.html',
@@ -20,6 +23,7 @@ import { MonumentService } from '../../services/monument.service';
           IonImg,
           IonText,
           IonButton,
+          RouterLink,
      ],
 })
 
@@ -29,7 +33,7 @@ export class MonumentItemComponent implements AfterViewInit {
 
      @ViewChild('card', { read: ElementRef }) card!: ElementRef;
 
-     constructor (private monumentService: MonumentService, private gestureCtrl: GestureController, private toastController: ToastController) {}
+     constructor (private monumentService: MonumentService, private gestureCtrl: GestureController, private toastController: ToastController, private router: Router) {}
 
      async eliminado_correcto() {
           const toast = await this.toastController.create({
@@ -76,5 +80,9 @@ export class MonumentItemComponent implements AfterViewInit {
           await this.monumentService.eliminar_monumento(id);
           this.eliminado.emit(id);
           this.eliminado_correcto();
+     }
+
+     ver_detalles(id: number) {
+          this.router.navigate(['/monument-detail', id]);
      }
 }

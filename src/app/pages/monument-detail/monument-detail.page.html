@@ -1,0 +1,63 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text="" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalles</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" fullscreen="true">
+
+  <ng-container *ngIf="monumento; else noEncontrada">
+    <ion-grid fixed class="main-grid">
+      <ion-row class="ion-justify-content-center">
+        
+        <ion-col size="12" size-md="10" size-lg="8">
+          
+          <div class="image-wrapper shadow-effect">
+            <img [src]="monumento.imagen" 
+                 alt="{{ monumento.nombre }}" 
+                 class="detail-img">
+                 
+            <div class="floating-badge">
+              <ion-icon name="location-sharp"></ion-icon>
+              <span>{{ monumento.ubicacion }}</span>
+            </div>
+          </div>
+
+          <div class="content-wrapper ion-padding">
+            
+            <h1 class="monument-title">{{ monumento.nombre }}</h1>
+
+            <div class="meta-section">
+              <div class="meta-tag">
+                <ion-icon name="calendar-outline" color="medium"></ion-icon>
+                <span>Construcción: <strong>{{ monumento.fecha_construccion | date:'mediumDate':'':'es' }}</strong></span>
+              </div>
+            </div>
+
+            <hr class="separator">
+
+            <div class="description-body">
+              <h3>Historia y Detalles</h3>
+              <p>{{ monumento.descripcion }}</p>
+            </div>
+
+          </div>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+
+  <ng-template #noEncontrada>
+    <div class="error-container ion-padding ion-text-center">
+      <ion-icon name="alert-circle-outline" size="large" color="medium"></ion-icon>
+      <h3>No encontrado</h3>
+      <p>No se pudo cargar la información del monumento.</p>
+      <ion-button routerLink="/home" fill="clear">Volver</ion-button>
+    </div>
+  </ng-template>
+
+</ion-content>
