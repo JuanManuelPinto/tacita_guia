@@ -39,7 +39,7 @@ import {
 
 import { DetalleModalComponent } from '../components/detalle-modal/detalle-modal.component';
 import { addIcons } from 'ionicons';
-import { informationCircleOutline } from 'ionicons/icons';
+import { informationCircleOutline, settingsOutline } from 'ionicons/icons';
 
 @Component({
      selector: 'app-home',
@@ -117,6 +117,7 @@ export class HomePage implements AfterViewInit {
      ) {
           addIcons({
                'information-circle-outline': informationCircleOutline,
+               'settings-outline': settingsOutline,
           });
      }
 
