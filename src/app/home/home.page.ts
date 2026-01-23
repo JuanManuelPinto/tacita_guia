@@ -4,7 +4,7 @@ import { Monumento } from '../interfaces/monumento';
 import { MonumentItemComponent } from '../components/monument-item/monument-item.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { MonumentService } from '../services/monument.service';
-
+import { SettingsService } from '../services/settings.service';
 import {
      ToastController,
      ModalController,
@@ -79,6 +79,7 @@ export class HomePage implements AfterViewInit {
 
      public cargando: boolean = true;
      public monumentos: Monumento[] = [];
+     public nombreUsuario: string = '';
 
      public skeletonCards: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -113,6 +114,7 @@ export class HomePage implements AfterViewInit {
           private modalController: ModalController,
           private animationCtrl: AnimationController,
           private monumentService: MonumentService,
+          private settingsService: SettingsService,
           private toastController: ToastController
      ) {
           addIcons({
@@ -152,6 +154,12 @@ export class HomePage implements AfterViewInit {
                buttons: ['OK'],
           });
           await toast.present();
+     }
+
+     async ionViewWillEnter() {
+          this.nombreUsuario = await this.settingsService.get('nombre_usuario') || '';
+          // Recargamos los monumentos por si se ha borrado alguno en la vista de detalle
+          this.cargar_monumentos();
      }
 
      ngOnInit() {

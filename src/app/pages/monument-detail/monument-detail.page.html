@@ -9,6 +9,14 @@
 
 <ion-content color="light" fullscreen="true">
 
+  <ion-alert
+    [isOpen]="isAlertOpen"
+    header="Confirmar Eliminación"
+    message="¿Estás seguro de que deseas eliminar este monumento? Esta acción no se puede deshacer."
+    [buttons]="alertButtons"
+    (didDismiss)="setOpenAlert(false)"
+  ></ion-alert>
+
   <ng-container *ngIf="monumento; else noEncontrada">
     <ion-grid fixed class="main-grid">
       <ion-row class="ion-justify-content-center">
@@ -61,3 +69,12 @@
   </ng-template>
 
 </ion-content>
+
+<ion-footer *ngIf="monumento" class="ion-no-border">
+  <ion-toolbar class="ion-text-center" style="--background: transparent;">
+    <ion-button shape="round" color="danger" (click)="setOpenAlert(true)">
+      <ion-icon slot="start" name="trash-outline"></ion-icon>
+      Eliminar Monumento
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

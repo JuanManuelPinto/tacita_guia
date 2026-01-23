@@ -10,3 +10,40 @@
   max-width: 320px;
   margin: 0;
 }
+
+.welcome-container {
+  margin-bottom: 20px;
+  text-align: center;
+  
+  .welcome-text {
+    background: var(--ion-color-white, #ffffff);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left: 6px solid var(--ion-color-primary);
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ion-color-dark);
+      
+      span {
+        color: var(--ion-color-primary);
+      }
+    }
+
+    p {
+      margin: 5px 0 0;
+      color: var(--ion-color-medium);
+      font-size: 14px;
+    }
+  }
+}
+
+// Soporte para modo oscuro
+@media (prefers-color-scheme: dark) {
+  .welcome-container .welcome-text {
+    background: var(--ion-card-background, #1e293b);
+  }
+}

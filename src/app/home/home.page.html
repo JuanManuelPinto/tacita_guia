@@ -1,6 +1,12 @@
 <app-header></app-header>
 
 <ion-content color="light">
+  <div class="welcome-container ion-padding-horizontal ion-margin-top">
+    <div class="welcome-text">
+      <h2>¡Hola, <span>{{ nombreUsuario || 'Visitante' }}</span>!</h2>
+      <p>Bienvenido a Tacita Guía</p>
+    </div>
+  </div>
   <ion-list>
     <ion-item>
       <ion-input label="Nuevo Monumento" labelPlacement="floating" placeholder="Nombre del monumento"

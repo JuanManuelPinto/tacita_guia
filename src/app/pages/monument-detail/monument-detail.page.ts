@@ -13,18 +13,22 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonAlert,
+  IonFooter,
+  ToastController 
 } from '@ionic/angular/standalone';
 
 import { Monumento } from 'src/app/interfaces/monumento';
 import { MonumentService } from 'src/app/services/monument.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 
 import { addIcons } from 'ionicons';
 import { 
   locationSharp, 
   calendarOutline, 
   alertCircleOutline,
-  arrowBack
+  arrowBack,
+  trashOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -47,28 +51,77 @@ import {
     IonGrid,
     IonRow,
     IonCol,
+    IonFooter,
+    IonAlert
   ],
 })
 export class MonumentDetailPage implements OnInit {
   monumento!: Monumento;
+  isAlertOpen = false;
+  
+  public alertButtons = [
+    {
+      text: 'Cancelar',
+      role: 'cancel',
+    },
+    {
+      text: 'Eliminar',
+      role: 'confirm',
+      handler: () => {
+        this.deleteMonument();
+      },
+    },
+  ];
 
   constructor(
     private route: ActivatedRoute,
-    private monumentService: MonumentService
+    private monumentService: MonumentService,
+    private router: Router,
+    private toastController: ToastController
   ) {
     addIcons({
       locationSharp,
       calendarOutline,
       alertCircleOutline,
-      arrowBack
+      arrowBack,
+      trashOutline
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    if (id !== undefined) {
-      this.monumento = this.monumentService.get_monumento_id(id)!;
+    if (id !== undefined && !isNaN(id)) {
+      const foundMonument = this.monumentService.get_monumento_id(id);
+      if (foundMonument) {
+        this.monumento = foundMonument;
+      } else {
+        await this.handleError();
+      }
+    } else {
+      await this.handleError();
+    }
+  }
+
+  async handleError() {
+    const toast = await this.toastController.create({
+      message: 'Elemento no encontrado',
+      duration: 2000,
+      position: 'bottom',
+      color: 'danger'
+    });
+    await toast.present();
+    this.router.navigate(['/home']);
+  }
+
+  setOpenAlert(isOpen: boolean) {
+    this.isAlertOpen = isOpen;
+  }
+
+  async deleteMonument() {
+    if (this.monumento) {
+      await this.monumentService.eliminar_monumento(this.monumento.id);
+      this.router.navigate(['/home']);
     }
   }
 }

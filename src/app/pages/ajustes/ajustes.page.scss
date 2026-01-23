@@ -1,0 +1,36 @@
+ion-content {
+  --background: var(--ion-color-light);
+}
+
+.settings-container {
+  padding-top: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+ion-list-header {
+  padding-left: 20px;
+  margin-bottom: 5px;
+  
+  ion-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ion-color-medium);
+  }
+}
+
+ion-item {
+  --padding-start: 16px;
+  border-radius: 8px;
+  
+  ion-icon[slot="start"] {
+    margin-right: 16px;
+    font-size: 22px;
+  }
+}
+
+ion-input {
+  --padding-start: 0;
+}
