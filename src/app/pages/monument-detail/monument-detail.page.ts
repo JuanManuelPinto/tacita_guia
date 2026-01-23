@@ -15,7 +15,8 @@ import {
   IonCol,
   IonAlert,
   IonFooter,
-  ToastController 
+  ToastController,
+  LoadingController
 } from '@ionic/angular/standalone';
 
 import { Monumento } from 'src/app/interfaces/monumento';
@@ -77,7 +78,8 @@ export class MonumentDetailPage implements OnInit {
     private route: ActivatedRoute,
     private monumentService: MonumentService,
     private router: Router,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loadingController: LoadingController
   ) {
     addIcons({
       locationSharp,
@@ -89,10 +91,15 @@ export class MonumentDetailPage implements OnInit {
   }
 
   async ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const loading = await this.loadingController.create({
+      message: 'Cargando monumento...',
+    });
+    await loading.present();
 
-    if (id !== undefined && !isNaN(id)) {
-      const foundMonument = this.monumentService.get_monumento_id(id);
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id !== null) {
+      const foundMonument = await this.monumentService.get_monumento_id(id);
       if (foundMonument) {
         this.monumento = foundMonument;
       } else {
@@ -101,14 +108,15 @@ export class MonumentDetailPage implements OnInit {
     } else {
       await this.handleError();
     }
+    await loading.dismiss();
   }
 
   async handleError() {
     const toast = await this.toastController.create({
       message: 'Elemento no encontrado',
       duration: 2000,
-      position: 'bottom',
-      color: 'danger'
+      color: 'danger',
+      position: 'bottom'
     });
     await toast.present();
     this.router.navigate(['/home']);
@@ -120,8 +128,34 @@ export class MonumentDetailPage implements OnInit {
 
   async deleteMonument() {
     if (this.monumento) {
-      await this.monumentService.eliminar_monumento(this.monumento.id);
-      this.router.navigate(['/home']);
+      const loading = await this.loadingController.create({
+        message: 'Eliminando...',
+      });
+      await loading.present();
+
+      try {
+        await this.monumentService.eliminar_monumento(this.monumento.id);
+        
+        const toast = await this.toastController.create({
+          message: 'Monumento eliminado correctamente',
+          duration: 2000,
+          color: 'success',
+          position: 'bottom'
+        });
+        await toast.present();
+        
+        this.router.navigate(['/home']);
+      } catch (error) {
+        const toast = await this.toastController.create({
+          message: 'Error al eliminar el monumento',
+          duration: 2000,
+          color: 'danger',
+          position: 'bottom'
+        });
+        await toast.present();
+      } finally {
+        await loading.dismiss();
+      }
     }
   }
 }

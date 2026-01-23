@@ -35,6 +35,7 @@ import {
      AnimationController,
      Animation,
      IonAlert,
+     LoadingController
 } from '@ionic/angular/standalone';
 
 import { DetalleModalComponent } from '../components/detalle-modal/detalle-modal.component';
@@ -115,7 +116,8 @@ export class HomePage implements AfterViewInit {
           private animationCtrl: AnimationController,
           private monumentService: MonumentService,
           private settingsService: SettingsService,
-          private toastController: ToastController
+          private toastController: ToastController,
+          private loadingController: LoadingController
      ) {
           addIcons({
                'information-circle-outline': informationCircleOutline,
@@ -156,30 +158,39 @@ export class HomePage implements AfterViewInit {
           await toast.present();
      }
 
+     // async ionViewWillEnter() {
+     //      this.nombreUsuario = await this.settingsService.get('nombre_usuario') || '';
+     //      // Recargamos los monumentos por si se ha borrado alguno en la vista de detalle
+     //      this.cargar_monumentos();
+     // }    
+
+     // ngOnInit() {
+     //      this.cargando = true;
+
+     //      setTimeout(() => {
+     //           this.monumentos = this.monumentService.get_monumentos();
+     //           this.cargando = false;
+     //      }, 2000);
+     // }
+
      async ionViewWillEnter() {
-          this.nombreUsuario = await this.settingsService.get('nombre_usuario') || '';
-          // Recargamos los monumentos por si se ha borrado alguno en la vista de detalle
-          this.cargar_monumentos();
-     }
-
-     ngOnInit() {
           this.cargando = true;
-
-          setTimeout(() => {
-               this.monumentos = this.monumentService.get_monumentos();
-               this.cargando = false;
-          }, 2000);
+          this.nombreUsuario = await this.settingsService.get('nombre_usuario') || '';
+          this.monumentos = await this.monumentService.get_monumentos();
+          this.cargando = false;
      }
 
      ngAfterViewInit() {
-          this.animacion = this.animationCtrl
-               .create()
-               .addElement(this.profileCard.nativeElement)
-               .duration(800)
-               .fromTo('transform', 'translateX(-100px)', 'translateX(0px)')
-               .fromTo('opacity', '0', '1');
+          if (this.profileCard) {
+               this.animacion = this.animationCtrl
+                    .create()
+                    .addElement(this.profileCard.nativeElement)
+                    .duration(800)
+                    .fromTo('transform', 'translateX(-100px)', 'translateX(0px)')
+                    .fromTo('opacity', '0', '1');
 
-          this.animacion.play();
+               this.animacion.play();
+          }
      }
 
      async abrirModal() {
@@ -201,8 +212,8 @@ export class HomePage implements AfterViewInit {
           }
      }
 
-     cargar_monumentos() {
-          this.monumentos = this.monumentService.get_monumentos();
+     async cargar_monumentos() {
+          this.monumentos = await this.monumentService.get_monumentos();
      }
 
      onAddClick() {
@@ -215,25 +226,36 @@ export class HomePage implements AfterViewInit {
      }
 
      async agregar_monumento(nuevo_monumento: Monumento) {
+          const loading = await this.loadingController.create({
+               message: 'Guardando monumento...',
+          });
+          await loading.present();
           
-          var insertado = await this.monumentService.agregar_monumento(nuevo_monumento);
+          try {
+               var insertado = await this.monumentService.agregar_monumento(nuevo_monumento);
+               
+               if (!insertado) {
+                    this.error_insertar();
+               } else {
+                    this.monumentos = await this.monumentService.get_monumentos();
           
-          if (!insertado) {
+                    this.nuevo_monumento = {
+                         id: 0,
+                         nombre: '',
+                         descripcion: '',
+                         imagen: '',
+                         ubicacion: '',
+                         fecha_construccion: new Date(),
+                    };
+          
+                    await this.cargar_monumentos();
+                    this.inserccion_correcta();
+               }
+          } catch (error) {
+               console.error('Error adding monument', error);
                this.error_insertar();
-          } else {
-               this.monumentos = this.monumentService.get_monumentos();
-     
-               this.nuevo_monumento = {
-                    id: 0,
-                    nombre: '',
-                    descripcion: '',
-                    imagen: '',
-                    ubicacion: '',
-                    fecha_construccion: new Date(),
-               };
-     
-               this.cargar_monumentos();
-               this.inserccion_correcta();
+          } finally {
+               await loading.dismiss();
           }
      }
 }
