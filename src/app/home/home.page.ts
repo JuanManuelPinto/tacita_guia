@@ -35,7 +35,8 @@ import {
      AnimationController,
      Animation,
      IonAlert,
-     LoadingController
+     LoadingController,
+     IonSearchbar
 } from '@ionic/angular/standalone';
 
 import { DetalleModalComponent } from '../components/detalle-modal/detalle-modal.component';
@@ -71,6 +72,7 @@ import { informationCircleOutline, settingsOutline } from 'ionicons/icons';
           IonDatetime,
           IonSkeletonText,
           IonAlert,
+          IonSearchbar
      ],
 })
 export class HomePage implements AfterViewInit {
@@ -81,6 +83,7 @@ export class HomePage implements AfterViewInit {
      public cargando: boolean = true;
      public monumentos: Monumento[] = [];
      public nombreUsuario: string = '';
+     public searchTerm: string = '';
 
      public skeletonCards: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -213,10 +216,18 @@ export class HomePage implements AfterViewInit {
      }
 
      async cargar_monumentos() {
-          this.monumentos = await this.monumentService.get_monumentos();
+          this.cargando = true;
+          this.monumentos = await this.monumentService.get_monumentos(this.searchTerm);
+          this.cargando = false;
      }
 
-     onAddClick() {
+     async search(event: any) {
+          this.searchTerm = event.detail.value;
+          console.log('Buscando:', this.searchTerm); // DEBUG
+          await this.cargar_monumentos();
+     }
+
+     async onAddClick() {
           const { nombre, descripcion, imagen, ubicacion } = this.nuevo_monumento;
           if (!nombre?.trim() || !descripcion?.trim() || !imagen?.trim() || !ubicacion?.trim()) {
                this.error_insertar();

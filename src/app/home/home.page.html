@@ -7,6 +7,11 @@
       <p>Bienvenido a Tacita Guía</p>
     </div>
   </div>
+  
+  <div class="ion-padding-horizontal">
+    <ion-searchbar placeholder="Buscar monumentos..." [debounce]="500" (ionInput)="search($event)"></ion-searchbar>
+  </div>
+
   <ion-list>
     <ion-item>
       <ion-input label="Nuevo Monumento" labelPlacement="floating" placeholder="Nombre del monumento"
