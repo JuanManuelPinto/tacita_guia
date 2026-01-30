@@ -23,36 +23,68 @@
         
         <ion-col size="12" size-md="10" size-lg="8">
           
-          <div class="image-wrapper shadow-effect">
-            <img [src]="monumento.imagen" 
-                 alt="{{ monumento.nombre }}" 
-                 class="detail-img">
-                 
-            <div class="floating-badge">
-              <ion-icon name="location-sharp"></ion-icon>
-              <span>{{ monumento.ubicacion }}</span>
-            </div>
-          </div>
-
-          <div class="content-wrapper ion-padding">
-            
-            <h1 class="monument-title">{{ monumento.nombre }}</h1>
-
-            <div class="meta-section">
-              <div class="meta-tag">
-                <ion-icon name="calendar-outline" color="medium"></ion-icon>
-                <span>Construcción: <strong>{{ monumento.fecha_construccion | date:'mediumDate':'':'es' }}</strong></span>
+          <!-- VISTA NORMAL -->
+          <ng-container *ngIf="!isEditing">
+            <div class="image-wrapper shadow-effect">
+              <img [src]="monumento.imagen" 
+                   alt="{{ monumento.nombre }}" 
+                   class="detail-img">
+                   
+              <div class="floating-badge">
+                <ion-icon name="location-sharp"></ion-icon>
+                <span>{{ monumento.ubicacion }}</span>
               </div>
             </div>
 
-            <hr class="separator">
+            <div class="content-wrapper ion-padding">
+              
+              <h1 class="monument-title">{{ monumento.nombre }}</h1>
 
-            <div class="description-body">
-              <h3>Historia y Detalles</h3>
-              <p>{{ monumento.descripcion }}</p>
+              <div class="meta-section">
+                <div class="meta-tag">
+                  <ion-icon name="calendar-outline" color="medium"></ion-icon>
+                  <span>Construcción: <strong>{{ monumento.fecha_construccion | date:'mediumDate':'':'es' }}</strong></span>
+                </div>
+              </div>
+
+              <hr class="separator">
+
+              <div class="description-body">
+                <h3>Historia y Detalles</h3>
+                <p>{{ monumento.descripcion }}</p>
+              </div>
+
             </div>
+          </ng-container>
 
-          </div>
+          <!-- VISTA EDICIÓN -->
+          <ng-container *ngIf="isEditing">
+             <div class="content-wrapper ion-padding">
+              <ion-item>
+                <ion-input label="Nombre" labelPlacement="stacked" [(ngModel)]="monumento.nombre"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="URL Imagen" labelPlacement="stacked" [(ngModel)]="monumento.imagen"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Ubicación" labelPlacement="stacked" [(ngModel)]="monumento.ubicacion"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-textarea label="Descripción" labelPlacement="stacked" rows="6" [(ngModel)]="monumento.descripcion"></ion-textarea>
+              </ion-item>
+              
+              <div class="ion-padding-top ion-text-center">
+                <ion-button color="success" (click)="guardarCambios()">
+                  <ion-icon slot="start" name="save-outline"></ion-icon>
+                  Guardar
+                </ion-button>
+                <ion-button color="medium" fill="outline" (click)="toggleEdit()">
+                  <ion-icon slot="start" name="close-outline"></ion-icon>
+                  Cancelar
+                </ion-button>
+              </div>
+             </div>
+          </ng-container>
 
         </ion-col>
       </ion-row>
@@ -72,7 +104,11 @@
 
 <ion-footer *ngIf="monumento" class="ion-no-border">
   <ion-toolbar class="ion-text-center" style="--background: transparent;">
-    <ion-button shape="round" color="danger" (click)="setOpenAlert(true)">
+    <ion-button *ngIf="!isEditing" shape="round" color="primary" (click)="toggleEdit()">
+      <ion-icon slot="start" name="create-outline"></ion-icon>
+      Editar
+    </ion-button>
+    <ion-button *ngIf="!isEditing" shape="round" color="danger" (click)="setOpenAlert(true)">
       <ion-icon slot="start" name="trash-outline"></ion-icon>
       Eliminar Monumento
     </ion-button>

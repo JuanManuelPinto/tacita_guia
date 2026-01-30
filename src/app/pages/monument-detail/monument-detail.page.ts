@@ -16,7 +16,10 @@ import {
   IonAlert,
   IonFooter,
   ToastController,
-  LoadingController
+  LoadingController,
+  IonItem,
+  IonInput,
+  IonTextarea
 } from '@ionic/angular/standalone';
 
 import { Monumento } from 'src/app/interfaces/monumento';
@@ -29,7 +32,10 @@ import {
   calendarOutline, 
   alertCircleOutline,
   arrowBack,
-  trashOutline
+  trashOutline,
+  createOutline,
+  saveOutline,
+  closeOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -38,6 +44,9 @@ import {
   styleUrls: ['./monument-detail.page.scss'],
   standalone: true,
   imports: [
+    IonItem,
+    IonInput,
+    IonTextarea,
     IonContent,
     IonHeader,
     IonTitle,
@@ -59,6 +68,7 @@ import {
 export class MonumentDetailPage implements OnInit {
   monumento!: Monumento;
   isAlertOpen = false;
+  isEditing = false;
   
   public alertButtons = [
     {
@@ -86,7 +96,10 @@ export class MonumentDetailPage implements OnInit {
       calendarOutline,
       alertCircleOutline,
       arrowBack,
-      trashOutline
+      trashOutline,
+      createOutline,
+      saveOutline,
+      closeOutline
     });
   }
 
@@ -124,6 +137,51 @@ export class MonumentDetailPage implements OnInit {
 
   setOpenAlert(isOpen: boolean) {
     this.isAlertOpen = isOpen;
+  }
+
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+  async guardarCambios() {
+    if (!this.monumento.nombre || !this.monumento.descripcion) {
+      const toast = await this.toastController.create({
+        message: 'Por favor completa los campos obligatorios',
+        duration: 2000,
+        color: 'warning',
+        position: 'bottom'
+      });
+      await toast.present();
+      return;
+    }
+
+    const loading = await this.loadingController.create({
+      message: 'Guardando cambios...',
+    });
+    await loading.present();
+
+    try {
+      await this.monumentService.actualizar_monumento(this.monumento);
+      
+      const toast = await this.toastController.create({
+        message: 'Monumento actualizado correctamente',
+        duration: 2000,
+        color: 'success',
+        position: 'bottom'
+      });
+      await toast.present();
+      this.isEditing = false;
+    } catch (error) {
+      const toast = await this.toastController.create({
+        message: 'Error al actualizar',
+        duration: 2000,
+        color: 'danger',
+        position: 'bottom'
+      });
+      await toast.present();
+    } finally {
+      await loading.dismiss();
+    }
   }
 
   async deleteMonument() {

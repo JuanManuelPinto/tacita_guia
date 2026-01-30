@@ -41,14 +41,6 @@
       "fecha_construccion": "1706-01-01"
     },
     {
-      "id": "6",
-      "nombre": "Castillo de Santa Catalina",
-      "descripcion": "Fortificación del siglo XVII con forma estrellada, construida para defender la ciudad tras el ataque anglo-holandés de 1596.",
-      "imagen": "https://turismo.cadiz.es/sites/default/files/styles/ancho-800/public/rutas-y-visitas/Castillo%20de%20Santa%20Catalina%20%284%29_0.jpg?itok=5I0BUf6s",
-      "ubicacion": "Playa de la Caleta, Cádiz",
-      "fecha_construccion": "1621-01-01"
-    },
-    {
       "id": "7",
       "nombre": "Gran Teatro Falla",
       "descripcion": "Teatro de estilo neomudéjar inaugurado en 1910. Escenario principal del famoso Carnaval de Cádiz.",
@@ -59,18 +51,10 @@
     {
       "id": "1141",
       "nombre": "Estadio Nuevo Mirandilla",
-      "descripcion": "El Estadio Nuevo Mirandilla, anteriormente denominado Estadio Ramón de Carranza, es un estadio municipal de la ciudad española de Cádiz, Andalucía, donde juega sus partidos como local el Cádiz Club de Fútbol.",
+      "descripcion": "El Estadio Nuevo Mirandilla, anteriormente denominado Estadio Ramón de Carranza, es un estadio municipal de la ciudad española de Cádiz.",
       "imagen": "https://de1.sportal365images.com/process/smp-bet365-images/news.bet365.es-es/10012023/11427c5f-8b8b-4076-9114-4ae0607db1a2.jpg",
       "ubicacion": "Pl. de Madrid, s/n, 11010 Cádiz",
       "fecha_construccion": "2026-01-23T08:52:54.758Z"
-    },
-    {
-      "id": "3c1d",
-      "nombre": "Freiduria Las Flores 1",
-      "descripcion": "Restaurante que sirve pescado y marisco fritos y ensalada de pulpo en las mesas de su terraza.",
-      "imagen": "https://cadiz.cosasdecome.es/wp-content/uploads/2016/09/NUEVA-WEB-2.jpg",
-      "ubicacion": "Pl. Topete, 4, 11001 Cádiz",
-      "fecha_construccion": "2026-01-23T08:56:19.640Z"
     }
   ]
 }

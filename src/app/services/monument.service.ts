@@ -68,4 +68,8 @@ export class MonumentService {
             return undefined;
         }
     }
+
+    async actualizar_monumento(monumento: Monumento) {
+        return firstValueFrom(this.http.put(`${this._url}/${monumento.id}`, monumento));
+    }
 }
