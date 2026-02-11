@@ -17,8 +17,18 @@
   <div class="settings-container">
     <ion-list inset="true">
       <ion-list-header>
-        <ion-label>Personalización</ion-label>
+        <ion-label>Perfil de Usuario</ion-label>
       </ion-list-header>
+
+      <div class="avatar-section ion-padding">
+        <ion-avatar (click)="addPhoto()">
+          <img [src]="photoService.foto || 'assets/img/logo.png'" />
+          <div class="camera-badge">
+            <ion-icon name="camera-outline"></ion-icon>
+          </div>
+        </ion-avatar>
+        <p class="avatar-hint">Pulsa para cambiar tu foto</p>
+      </div>
       
       <ion-item lines="full">
         <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>

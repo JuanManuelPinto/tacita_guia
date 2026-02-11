@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from 'src/app/services/settings.service';
+import { PhotoService } from 'src/app/services/photo';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonLabel, IonToggle, IonButtons, IonBackButton, IonInput, IonButton, IonIcon, ToastController } from '@ionic/angular/standalone';
+import { 
+  IonContent, IonHeader, IonTitle, IonToolbar, IonList, 
+  IonListHeader, IonItem, IonLabel, IonToggle, IonButtons, 
+  IonBackButton, IonInput, IonButton, IonIcon, ToastController,
+  IonAvatar
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { saveOutline, personOutline, moonOutline, chevronForwardOutline } from 'ionicons/icons';
+import { 
+  saveOutline, personOutline, moonOutline, chevronForwardOutline, 
+  cameraOutline 
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-ajustes',
@@ -11,11 +21,12 @@ import { saveOutline, personOutline, moonOutline, chevronForwardOutline } from '
   styleUrls: ['./ajustes.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     IonContent, IonHeader, IonTitle, IonToolbar,
     IonButtons, IonBackButton,
     IonList, IonListHeader, IonItem, IonLabel, IonToggle, IonInput,
     FormsModule,
-    IonButton, IonIcon
+    IonButton, IonIcon, IonAvatar
   ]
 })
 export class AjustesPage implements OnInit {
@@ -25,9 +36,13 @@ export class AjustesPage implements OnInit {
 
   constructor(
     private settingsService: SettingsService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    public photoService: PhotoService
   ) { 
-    addIcons({ saveOutline, personOutline, moonOutline, chevronForwardOutline });
+    addIcons({ 
+      saveOutline, personOutline, moonOutline, chevronForwardOutline,
+      cameraOutline 
+    });
   }
 
   // ¡IMPORTANTE! Añadimos 'async' para poder usar 'await' dentro
@@ -40,6 +55,10 @@ export class AjustesPage implements OnInit {
 
     // Aplicamos el tema inmediatamente al entrar por si acaso
     this.aplicarTema(this.modoOscuro);
+  }
+
+  async addPhoto() {
+    await this.photoService.addNewToGallery();
   }
 
   // Guardar el nombre cuando cambie

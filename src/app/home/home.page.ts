@@ -35,13 +35,16 @@ import {
      AnimationController,
      Animation,
      IonAlert,
+     IonImg,
+     IonAvatar,
      LoadingController,
      IonSearchbar
 } from '@ionic/angular/standalone';
 
 import { DetalleModalComponent } from '../components/detalle-modal/detalle-modal.component';
 import { addIcons } from 'ionicons';
-import { informationCircleOutline, settingsOutline } from 'ionicons/icons';
+import { informationCircleOutline, settingsOutline, camera } from 'ionicons/icons';
+import { PhotoService } from '../services/photo';
 
 @Component({
      selector: 'app-home',
@@ -72,6 +75,8 @@ import { informationCircleOutline, settingsOutline } from 'ionicons/icons';
           IonDatetime,
           IonSkeletonText,
           IonAlert,
+          IonImg,
+          IonAvatar,
           IonSearchbar
      ],
 })
@@ -120,14 +125,20 @@ export class HomePage implements AfterViewInit {
           private monumentService: MonumentService,
           private settingsService: SettingsService,
           private toastController: ToastController,
-          private loadingController: LoadingController
+          private loadingController: LoadingController,
+          public photoService: PhotoService,
      ) {
           addIcons({
                'information-circle-outline': informationCircleOutline,
                'settings-outline': settingsOutline,
+               'camera': camera,
           });
      }
-
+     
+     addPhoto() {
+          this.photoService.addNewToGallery();
+     }
+     
      async inserccion_correcta() {
           const toast = await this.toastController.create({
                message: 'Monumento Añadido Correctamente',
@@ -160,21 +171,6 @@ export class HomePage implements AfterViewInit {
           });
           await toast.present();
      }
-
-     // async ionViewWillEnter() {
-     //      this.nombreUsuario = await this.settingsService.get('nombre_usuario') || '';
-     //      // Recargamos los monumentos por si se ha borrado alguno en la vista de detalle
-     //      this.cargar_monumentos();
-     // }    
-
-     // ngOnInit() {
-     //      this.cargando = true;
-
-     //      setTimeout(() => {
-     //           this.monumentos = this.monumentService.get_monumentos();
-     //           this.cargando = false;
-     //      }, 2000);
-     // }
 
      async ionViewWillEnter() {
           this.cargando = true;
@@ -223,7 +219,6 @@ export class HomePage implements AfterViewInit {
 
      async search(event: any) {
           this.searchTerm = event.detail.value;
-          console.log('Buscando:', this.searchTerm); // DEBUG
           await this.cargar_monumentos();
      }
 

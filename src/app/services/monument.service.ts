@@ -14,14 +14,17 @@ export class MonumentService {
     constructor(private http: HttpClient) { }
 
     async get_monumentos(query?: string): Promise<Monumento[]> {
-        let params: any = {};
-        if (query) {
-            params['nombre_like'] = query;
+        const monumentos = await firstValueFrom(this.http.get<Monumento[]>(this._url));
+        
+        if (!query || query.trim() === '') {
+            return monumentos;
         }
-        
-        console.log('Consultando monumentos con params:', params); // DEBUG
-        
-        return firstValueFrom(this.http.get<Monumento[]>(this._url, { params }));
+
+        const searchTerm = query.toLowerCase();
+        return monumentos.filter(m => 
+            m.nombre.toLowerCase().includes(searchTerm) || 
+            m.descripcion.toLowerCase().includes(searchTerm)
+        );
     }
 
     public nuevo_monumento: Monumento = {

@@ -3,8 +3,18 @@
 <ion-content color="light">
   <div class="welcome-container ion-padding-horizontal ion-margin-top">
     <div class="welcome-text">
-      <h2>¡Hola, <span>{{ nombreUsuario || 'Visitante' }}</span>!</h2>
-      <p>Bienvenido a Tacita Guía</p>
+      <div class="welcome-header">
+        <div class="text-content">
+          <h2 class="ion-text-center">¡Hola, <span>{{ nombreUsuario || 'Visitante' }}</span>!</h2>
+          <p class="ion-text-center">Bienvenido a Tacita Guía</p>
+        </div>
+        <ion-avatar *ngIf="photoService.foto" class="ion-margin-top">
+          <img [src]="photoService.foto" />
+        </ion-avatar>
+        <ion-avatar *ngIf="!photoService.foto">
+          <img src="assets/img/logo.png" />
+        </ion-avatar>
+      </div>
     </div>
   </div>
   
