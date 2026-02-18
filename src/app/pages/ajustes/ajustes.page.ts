@@ -3,55 +3,98 @@ import { SettingsService } from 'src/app/services/settings.service';
 import { PhotoService } from 'src/app/services/photo';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, IonHeader, IonTitle, IonToolbar, IonList, 
-  IonListHeader, IonItem, IonLabel, IonToggle, IonButtons, 
-  IonBackButton, IonInput, IonButton, IonIcon, ToastController,
-  IonAvatar
-} from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonListHeader,
+  IonItem,
+  IonLabel,
+  IonToggle,
+  IonButtons,
+  IonBackButton,
+  IonInput,
+  IonButton,
+  IonIcon,
+  ToastController,
+  IonAvatar,
+  IonCard,
+  IonCardHeader,
+  IonCardContent, IonCardTitle } from '@ionic/angular/standalone';
+
 import { addIcons } from 'ionicons';
-import { 
-  saveOutline, personOutline, moonOutline, chevronForwardOutline, 
-  cameraOutline 
+
+import {
+  saveOutline,
+  personOutline,
+  moonOutline,
+  chevronForwardOutline,
+  cameraOutline,
+  map,
+  locate,
 } from 'ionicons/icons';
+
+import { LocationService } from 'src/app/services/location';
 
 @Component({
   selector: 'app-ajustes',
   templateUrl: './ajustes.page.html',
   styleUrls: ['./ajustes.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonCardTitle, 
     CommonModule,
-    IonContent, IonHeader, IonTitle, IonToolbar,
-    IonButtons, IonBackButton,
-    IonList, IonListHeader, IonItem, IonLabel, IonToggle, IonInput,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonList,
+    IonListHeader,
+    IonItem,
+    IonLabel,
+    IonToggle,
+    IonInput,
     FormsModule,
-    IonButton, IonIcon, IonAvatar
-  ]
+    IonButton,
+    IonIcon,
+    IonAvatar,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+  ],
 })
 export class AjustesPage implements OnInit {
-
   modoOscuro: boolean = false; // Valor por defecto
   nombreUsuario: string = ''; // Nombre del usuario
 
   constructor(
     private settingsService: SettingsService,
     private toastController: ToastController,
-    public photoService: PhotoService
-  ) { 
-    addIcons({ 
-      saveOutline, personOutline, moonOutline, chevronForwardOutline,
-      cameraOutline 
+    public photoService: PhotoService,
+    public locationService: LocationService,
+  ) {
+    addIcons({
+      saveOutline,
+      personOutline,
+      moonOutline,
+      chevronForwardOutline,
+      cameraOutline,
+      map,
+      locate,
     });
   }
 
   // ¡IMPORTANTE! Añadimos 'async' para poder usar 'await' dentro
   async ngOnInit() {
     // Al entrar, cargamos el valor guardado
-    // Si no existe (es la primera vez), settingsService.get devuelve null, 
+    // Si no existe (es la primera vez), settingsService.get devuelve null,
     // así que usamos '|| false' para que sea false por defecto.
-    this.modoOscuro = await this.settingsService.get('modo_oscuro') || false;
-    this.nombreUsuario = await this.settingsService.get('nombre_usuario') || '';
+    this.modoOscuro = (await this.settingsService.get('modo_oscuro')) || false;
+    this.nombreUsuario =
+      (await this.settingsService.get('nombre_usuario')) || '';
 
     // Aplicamos el tema inmediatamente al entrar por si acaso
     this.aplicarTema(this.modoOscuro);
@@ -61,15 +104,29 @@ export class AjustesPage implements OnInit {
     await this.photoService.addNewToGallery();
   }
 
+  async obtenerGPS() {
+    try {
+      await this.locationService.obtenerPosicionActual();
+    } catch (error) {
+      const toast = await this.toastController.create({
+        message: 'No se pudo obtener la ubicación',
+        duration: 2000,
+        position: 'bottom',
+        color: 'danger',
+      });
+      await toast.present();
+    }
+  }
+
   // Guardar el nombre cuando cambie
   async guardarNombre() {
     await this.settingsService.set('nombre_usuario', this.nombreUsuario);
-    
+
     const toast = await this.toastController.create({
       message: 'Nombre guardado correctamente',
       duration: 2000,
       position: 'bottom',
-      color: 'success'
+      color: 'success',
     });
     await toast.present();
   }

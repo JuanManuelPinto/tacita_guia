@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="ion-padding-horizontal">
     <ion-searchbar placeholder="Buscar monumentos..." [debounce]="500" (ionInput)="search($event)"></ion-searchbar>
   </div>
@@ -56,7 +56,8 @@
     <ion-button expand="block" class="ion-margin-top ion-margin-bottom" (click)="onAddClick()">
       Añadir Monumento
     </ion-button>
-    <ion-alert [isOpen]="isAlertOpen" header="Confirmar" message="¿Estás seguro de añadir este monumento?" [buttons]="alertButtons" (didDismiss)="isAlertOpen=false"></ion-alert>
+    <ion-alert [isOpen]="isAlertOpen" header="Confirmar" message="¿Estás seguro de añadir este monumento?"
+      [buttons]="alertButtons" (didDismiss)="isAlertOpen=false"></ion-alert>
 
   </ion-list>
 

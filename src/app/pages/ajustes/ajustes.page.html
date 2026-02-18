@@ -29,10 +29,11 @@
         </ion-avatar>
         <p class="avatar-hint">Pulsa para cambiar tu foto</p>
       </div>
-      
+
       <ion-item lines="full">
         <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
-        <ion-input label="Tu Nombre" labelPlacement="stacked" placeholder="Escribe tu nombre" [(ngModel)]="nombreUsuario"></ion-input>
+        <ion-input label="Tu Nombre" labelPlacement="stacked" placeholder="Escribe tu nombre"
+          [(ngModel)]="nombreUsuario"></ion-input>
         <ion-button slot="end" fill="clear" (click)="guardarNombre()">
           <ion-icon slot="icon-only" name="save-outline"></ion-icon>
         </ion-button>
@@ -43,12 +44,39 @@
       <ion-list-header>
         <ion-label>Apariencia</ion-label>
       </ion-list-header>
-      
+
       <ion-item lines="full">
         <ion-icon slot="start" name="moon-outline" color="secondary"></ion-icon>
         <ion-label>Modo Oscuro</ion-label>
         <ion-toggle slot="end" [(ngModel)]="modoOscuro" (ionChange)="cambiarModoOscuro()"></ion-toggle>
       </ion-item>
     </ion-list>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Mi Ubicación</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p *ngIf="!locationService.latitud">Sin datos GPS</p>
+
+        <div *ngIf="locationService.latitud">
+          <p>Lat: {{ locationService.latitud }}</p>
+          <p>Long: {{ locationService.longitud }}</p>
+
+          <ion-button
+            [href]="'https://www.google.com/maps/search/?api=1&query=' + locationService.latitud + ',' + locationService.longitud"
+            target="_blank">
+            Ver en Mapa
+            <ion-icon name="map" slot="end"></ion-icon>
+          </ion-button>
+        </div>
+
+        <ion-button expand="block" (click)="obtenerGPS()">
+          <ion-icon name="locate" slot="start"></ion-icon>
+          Obtener Coordenadas
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
