@@ -17,16 +17,22 @@ export class PhotoService {
   }
 
   public async addNewToGallery() {
-    const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Base64,
-      source: CameraSource.Camera,
-      quality: 100,
-    });
+    try {
+      const capturedPhoto = await Camera.getPhoto({
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Prompt,
+        quality: 50, // Reducimos la calidad para ahorrar espacio
+        width: 600,  // Redimensionamos la imagen
+        correctOrientation: true
+      });
 
-    const base64Data = `data:image/jpeg;base64,${capturedPhoto.base64String}`;
-    this.foto = base64Data;
-    
-    // Guardar en Storage de forma persistente
-    await this.settingsService.set('foto_perfil', base64Data);
+      const base64Data = `data:image/jpeg;base64,${capturedPhoto.base64String}`;
+      this.foto = base64Data;
+      
+      // Guardar en Storage de forma persistente
+      await this.settingsService.set('foto_perfil', base64Data);
+    } catch (error) {
+      console.log('Cámara cancelada o error:', error);
+    }
   }
 }

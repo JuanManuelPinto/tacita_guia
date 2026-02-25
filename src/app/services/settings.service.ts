@@ -36,9 +36,13 @@ export class SettingsService {
    * @param value El valor a guardar (ej: true, 'Javier', etc.)
    */
   public async set(key: string, value: any): Promise<void> {
-    // Nos aseguramos de que esté iniciada
-    await this.init();
-    await this._storage?.set(key, value);
+    try {
+      await this.init();
+      await this._storage?.set(key, value);
+    } catch (error) {
+      console.error('Error guardando en Storage:', error);
+      // Si falla por tamaño, intentamos limpiar o avisar
+    }
   }
 
   /**
