@@ -48,6 +48,8 @@ import {
 } from 'ionicons/icons';
 import { PhotoService } from '../services/photo';
 
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -134,7 +136,8 @@ export class HomePage implements AfterViewInit {
     });
   }
 
-  addPhoto() {
+  async addPhoto() {
+    await Haptics.impact({ style: ImpactStyle.Medium });
     this.photoService.addNewToGallery();
   }
 

@@ -1,12 +1,16 @@
 import { Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonText, IonButton, GestureController, ToastController } from '@ionic/angular/standalone';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonText, IonButton, GestureController, ToastController, IonIcon, IonButtons } from '@ionic/angular/standalone';
 import { Monumento } from '../../interfaces/monumento';
+import { Share } from '@capacitor/share';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 import { MonumentService } from '../../services/monument.service';
 
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { shareOutline } from 'ionicons/icons';
 
 @Component({
      selector: 'app-monument-item',
@@ -24,6 +28,8 @@ import { Router } from '@angular/router';
           IonText,
           IonButton,
           RouterLink,
+          IonIcon,
+          IonButtons
      ],
 })
 
@@ -33,7 +39,19 @@ export class MonumentItemComponent implements AfterViewInit {
 
      @ViewChild('card', { read: ElementRef }) card!: ElementRef;
 
-     constructor (private monumentService: MonumentService, private gestureCtrl: GestureController, private toastController: ToastController, private router: Router) {}
+     constructor (private monumentService: MonumentService, private gestureCtrl: GestureController, private toastController: ToastController, private router: Router) {
+          addIcons({ shareOutline });
+     }
+
+     async compartir() {
+          await Haptics.impact({ style: ImpactStyle.Light });
+          await Share.share({
+               title: this.monumento.nombre,
+               text: this.monumento.descripcion,
+               url: 'http://localhost:8100/monument-detail/' + this.monumento.id,
+               dialogTitle: 'Compartir Monumento',
+          });
+     }
 
      async eliminado_correcto() {
           const toast = await this.toastController.create({

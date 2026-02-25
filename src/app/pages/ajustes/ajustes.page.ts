@@ -38,6 +38,8 @@ import {
 
 import { LocationService } from 'src/app/services/location';
 
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+
 @Component({
   selector: 'app-ajustes',
   templateUrl: './ajustes.page.html',
@@ -101,11 +103,13 @@ export class AjustesPage implements OnInit {
   }
 
   async addPhoto() {
+    await Haptics.impact({ style: ImpactStyle.Medium });
     await this.photoService.addNewToGallery();
   }
 
   async obtenerGPS() {
     try {
+      await Haptics.notification({ type: ImpactStyle.Light as any });
       await this.locationService.obtenerPosicionActual();
     } catch (error) {
       const toast = await this.toastController.create({
@@ -120,6 +124,7 @@ export class AjustesPage implements OnInit {
 
   // Guardar el nombre cuando cambie
   async guardarNombre() {
+    await Haptics.impact({ style: ImpactStyle.Medium });
     await this.settingsService.set('nombre_usuario', this.nombreUsuario);
 
     const toast = await this.toastController.create({
@@ -133,6 +138,7 @@ export class AjustesPage implements OnInit {
 
   // También debe ser async porque settingsService.set devuelve una promesa
   async cambiarModoOscuro() {
+    await Haptics.impact({ style: ImpactStyle.Light });
     // 1. Guardamos el nuevo valor en la base de datos
     await this.settingsService.set('modo_oscuro', this.modoOscuro);
 
