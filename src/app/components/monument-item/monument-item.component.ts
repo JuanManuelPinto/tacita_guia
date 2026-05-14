@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonText, IonButton, GestureController, ToastController, IonIcon, IonButtons } from '@ionic/angular/standalone';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonText, IonButton, GestureController, ToastController, IonIcon } from '@ionic/angular/standalone';
 import { Monumento } from '../../interfaces/monumento';
 import { Share } from '@capacitor/share';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -28,8 +28,7 @@ import { shareOutline } from 'ionicons/icons';
           IonText,
           IonButton,
           RouterLink,
-          IonIcon,
-          IonButtons
+          IonIcon
      ],
 })
 

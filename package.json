@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "api": "json-server --watch db.json --host 0.0.0.0"
+    "api": "npx json-server --watch db.json --host 0.0.0.0",
+    "dev": "ionic serve"
   },
   "private": true,
   "dependencies": {
