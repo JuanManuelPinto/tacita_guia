@@ -1,8 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'tacita_guia',
+  appId: 'com.juanmanp.tacitaguia',
+  appName: 'Tacita Guía',
+  version: '1.0.0',
   webDir: 'www',
   server: {
     cleartext: true,

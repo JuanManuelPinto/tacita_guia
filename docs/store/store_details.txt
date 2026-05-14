@@ -1,0 +1,25 @@
+--- FICHA DE LA TIENDA - GOOGLE PLAY ---
+
+TÍTULO (Máx 30 caracteres):
+Tacita Guía: Descubre Cádiz
+
+DESCRIPCIÓN BREVE (Máx 80 caracteres):
+Tu guía personal para explorar los monumentos y la esencia mágica de Cádiz.
+
+DESCRIPCIÓN COMPLETA:
+¡Bienvenidos a la "Tacita de Plata"! Tacita Guía es la aplicación definitiva para los amantes de Cádiz que desean explorar su historia, sus monumentos y sus rincones más emblemáticos de una forma moderna e interactiva.
+
+Características principales:
+- Explora Monumentos: Un listado detallado con fotos, historia y fechas de construcción.
+- Integración con Google Maps: Localiza cada punto de interés con un solo toque y recibe indicaciones precisas por GPS.
+- Personalización: Crea tu propio perfil, añade tu foto y personaliza tu experiencia con el Modo Oscuro.
+- Comparte la Experiencia: Comparte tus monumentos favoritos con amigos y familiares a través de redes sociales.
+- Interfaz Premium: Disfruta de una experiencia visual fluida, diseñada específicamente para Android.
+
+Descarga Tacita Guía hoy mismo y empieza a descubrir por qué Cádiz es la ciudad más antigua de Occidente. ¡La esencia de Gadir te espera!
+
+--- DATOS TÉCNICOS ---
+Package Name: com.juanmanp.tacitaguia
+Versión: 1.0.0
+Categoría: Viajes y Guías Locales
+Clasificación: PEGI 3 (Apto para todos los públicos)
